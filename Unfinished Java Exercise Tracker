@@ -1,0 +1,247 @@
+import javax.swing.*;
+import java.util.Scanner;
+
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+public class ProDoc 
+{
+	final static int MAX = 1;
+	public static void main(String[] args) 
+	{
+		Scanner in = new Scanner(System.in);
+		// TODO Auto-generated method stub//input		
+		double [] dAll = new double[MAX];										// holds Total calories
+		String [] strDay = new String [MAX];									// holds Users Workout Days
+		String [] strFinalCal =  new String [MAX];								// holds Users Total Calories
+		String strExerciseCode = "";											// hold's User’s exercise Code
+		String strName= "";														//Print Header placehr older
+		String strSport="";														//Users' Sport
+		String strName1= "";													//null
+		String strExerciseName = "";											//Print Header placeholder
+		String strExerciseName1 = "";											//null
+		
+		//Declaration
+				String strTemp = "";
+				  Scanner in1 = new Scanner(System.in);
+				  double dWeightPounds = 0.0;     		// weight of individual in pounds
+				  double dHeightInches = 0.0;     		// height of individual in inches
+				  double dWeightKG = 0.0;     			// weight of individual	in kilograms
+				  double dHeightM = 0.0;     			// height of individual	in meters
+				  double dBMI = dWeightPounds/dHeightInches;		// Body Mass Index of individual
+				  String strGender;									// Gender
+				  String strName2;									//Name
+				  String strMsg;  									// Holds input string question 
+				
+				// input
+				  strMsg = "Enter Your Name";
+				  strName = JOptionPane.showInputDialog(strMsg);
+				  System.out.print("Welcome to Our Program!\n");
+				  System.out.println("Hello " + strName + "!, Tell us about yourself");
+				  
+				  strMsg = "Enter Gender # \n Female \n Male";
+				  strGender = JOptionPane.showInputDialog(strMsg);
+				  System.out.println(strGender);
+				  
+				// process
+				  System.out.println("Enter Weight");				//Turn into JOPTIONs
+				  dWeightPounds = in1.nextDouble();
+				  System.out.println("Enter Height (Inches)");
+				  dHeightInches = in1.nextDouble();
+				  
+				  dWeightKG = dWeightPounds * 0.45;
+				  dHeightM = (dHeightInches * 0.025)*(dHeightInches * 0.025);
+				  dBMI = dWeightKG/dHeightM;
+				 System.out.println("Your BMI is " + dBMI);
+				 
+				// output
+				  if(dBMI<= 18.5)
+					  System.out.println("Underweight, we have a little work to do!");
+				  else if (dBMI >= 18.5 && dBMI <= 24.9)
+					  System.out.println("Normal Weight, great job, lets keep it up!"); 
+				  else if(dBMI >= 24.9 && dBMI <= 29.9)
+					  System.out.println("Overweight, we have a little work to do!");
+				  else
+					  System.out.println("Obese, we have a lot of work to do!");
+				  
+		//Inputs
+				  
+		String strExercises = PrintOptions();
+		strSport = GetSport();	
+		strExerciseCode = 	GetExerciseCode();
+		strExerciseName = GetExercise(strExerciseCode);
+		
+		for (int i = 0; i < MAX; i++) 											//this is the main loop to track Calories lost 
+		{	
+			strDay[i] = GetDay();
+			dAll[i] =  GetWorkout();
+			strFinalCal[i] = GetGoal(dAll[i]);
+		}
+		PrintHeader(strName1, strExerciseName1);	
+		for (int i = 0; i < MAX; i++) 											//this is the main loop to enter exercise info
+		{	
+			PrintDetails( dAll[i], strDay[i], strFinalCal[i]); 
+		}
+		
+		String strNewExercises= NewWorkout();
+	}
+	public static String GetSport()										//Prints User’s Sport
+	{
+		String strTemp = "";
+		strTemp = JOptionPane.showInputDialog("Enter your Sport");
+		System.out.println("Athlete\t" + strTemp);
+		return strTemp;
+	}
+	
+	public static String PrintOptions()
+	{
+		System.out.println("Exercise for 30 minutes!");
+		  System.out.println("");
+		  System.out.println("(CA)=Cardio");
+		  System.out.println( "(AE)=Aerobics");
+		  System.out.println("(WTLFT)=Weight Lifting");
+		  System.out.println("(SWIM)=Swimming \n");
+		return null;
+
+	}
+	
+	public static void PrintHeader(String strName2, String strMajor2)
+	//this method prints the page header
+	{		
+		System.out.println("|  	DAY #	 |   Calories Lost    |   Goal Achieved? 	|");
+		System.out.println("|---------------------------------------------------------------|");
+	}
+	
+	public static void PrintDetails(double dAve, String strName1, String strLetter)//this method prints the Exercise detail
+	{	
+		System.out.printf("|%-15s|%-15s|%-15s|\n", strName1, dAve, strLetter);
+		System.out.println("|--------------------------------------------------------------");
+		return;
+	}	
+	public static String GetExerciseCode()											//Prints Students Code
+	{
+		String strTemp = "";
+		strTemp = JOptionPane.showInputDialog("Enter your Exercise Code");
+		return strTemp;
+	}
+
+	public static String GetExercise(String Exercise)									//Prints Users Preferred Workout
+	{
+		String strExerciseCode = "Enter Exercise Code";						//Workout Abbreviation
+		strExerciseCode = JOptionPane.showInputDialog(strExerciseCode);
+		strExerciseCode = strExerciseCode.toUpperCase();
+		/*				
+		 * 			strExerciseCode = CA Cardio 30 minute intervals 
+		 * 			strExerciseCode = AE Aerobics 30 minute intervals
+		 * 			strExerciseCode = WTLFT Weight Lifting 30 minute intervals
+		 *  		strExerciseCode = SWIM Weight Lifting 30 minute intervals
+		 */
+		
+		switch(strExerciseCode)
+		{
+		case "CA":
+			System.out.println("Exercise:   Cardio = 413 calories\n");
+			break;
+		case "AE":
+			System.out.println("Exercise:   Aerobics = 400 calories\n");
+			break;
+		case "WTLFT":
+			System.out.println("Exercise:   Weight Lifting = 270 calories \n");
+			break;
+		case "SWIM":
+			System.out.println("Exercise:   SWIM = 413 calories \n");
+			break;
+		}
+		return strExerciseCode;
+	}
+	
+	public static void Header()
+	//this method prints the page header
+	{
+		System.out.println("  Exercise      Calories Lost       Frequency for the Week");
+	}
+	
+	public static String GetDay()												//Prints Day Number Out of Seven Days
+	{
+		String strMsg = "Add another Day?"; //Message
+		String strTitle = "Day #";
+		String strTemp = "";
+		int nReply = 0; 
+		
+			strTemp = "";
+			strTemp = JOptionPane.showInputDialog("Enter the Day #/7");
+		return strTemp;
+	}
+	
+	public static double GetWorkout()
+	{
+		String strMsg = "Add another Workout?"; //Message
+		String strTitle = "Another Workout";
+		String strTemp = "";
+		int nNum = 0;
+		int nCounter = 0;
+		int nAccumulator = 0;
+		double dTot = 0.0;
+		double dGoal=0.0;
+		int nReply = 0;
+		
+		do 
+		{
+			strTemp = JOptionPane.showInputDialog("Enter Calories for each interval");
+			nNum = Integer.parseInt(strTemp);
+			nAccumulator += nNum;			//nAccumulator = nAccumulator + nNum
+			nCounter ++;
+			
+			nReply = JOptionPane.showConfirmDialog(null, strMsg, strTitle, JOptionPane.YES_NO_OPTION);
+		}while (nReply == JOptionPane.YES_OPTION);
+			
+		dTot = nAccumulator;
+		
+		return dTot;
+	}
+	
+	public static String GetGoal(double dTot)							//Prints Athletes Goal Message
+	{
+		String strGoalMsg = "";
+		String strTemp = JOptionPane.showInputDialog("Enter Your Target Calories");
+		int nNum = Integer.parseInt(strTemp);
+		
+		if (dTot >= nNum)
+			strGoalMsg = "Fantastic, goal more than achieved!";
+		else if (dTot == nNum)
+			strGoalMsg = "Great job, goal achieved!" ;
+		else if (dTot <= nNum)
+			strGoalMsg = "Keep working, almost there! ";
+		else 
+			strGoalMsg= "You have to try!!!";
+		
+		return strGoalMsg ;
+	}
+
+	
+	public static String NewWorkout()
+	{
+		String strWorkout = "";
+		String strTemp = JOptionPane.showInputDialog("Enter Your New Target Calories for Each Day.  ");
+		int nNum = Integer.parseInt(strTemp);
+		
+		
+		if (nNum >= 1000 )
+			strWorkout ="Each for 30 minutes\n Cardio, Aerobics, Swimming, Weight Lifting";
+		else if (nNum>=800 && nNum<=1000)
+			strWorkout= "Each for 30 minutes\n Aerobics, and Swimming" ;
+		else if (nNum >= 400 && nNum<=800)
+			strWorkout = "Each for 30 minutes\n Weightlifting, and Swimming! ";
+		else 
+			strWorkout= "Aim Higher for your Target!!";
+		System.out.println("Based on Target Calories, this is the suggested workout routine");
+		System.out.println(strWorkout);
+		return strWorkout ;
+	}
+		
+		
+	
+	
+
+	
+
+}
