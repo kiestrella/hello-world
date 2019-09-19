@@ -1,0 +1,371 @@
+CREATE TABLE Books
+( ISBN CHAR (17),
+  BookTitle CHAR (50),
+  BookCategory CHAR (20),
+  Genre CHAR (24),
+  DepartmentID CHAR (5),
+  AuthorID CHAR (5),
+  PublisherID CHAR (5),
+  PRIMARY KEY (ISBN),
+  FOREIGN KEY (AuthorID) REFERENCES Authors (AuthorID),
+  FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID),
+  FOREIGN KEY (PublisherID) REFERENCES Publishers(PublisherID)
+ );
+ 
+INSERT INTO BOOKS
+VALUES ('9780553593716', 'A Game of Thrones', 'Novels', 'Science Fiction', 'Au1', 'D2', 'P1');
+INSERT INTO Books
+VALUES ('9780553579901', 'A Clash of Kings', 'Novels', 'Science Fiction', 'Au1', 'D2', 'P1');
+INSERT INTO Books
+VALUES ('9780553573428', 'A Storm of Swords', 'Novels', 'Science Fiction', 'Au1', 'D2', 'P1');
+INSERT INTO Books
+VALUES ('9780553582024', 'A Feast for Crows', 'Novels', 'Science Fiction', 'Au1', 'D2', 'P1');
+INSERT INTO Books
+VALUES ('9780553582017', 'A Dance with Dragons', 'Novels', 'Science Fiction', 'Au1', 'D2', 'P1');
+INSERT INTO Books
+VALUES ('9780399501487', 'Lord of the Flies', 'Novels', 'Fiction', 'Au2', 'D2', 'P2');
+INSERT INTO Books
+VALUES ('9780393320978', 'Beowulf', 'Poetry', 'Fiction', 'Au3', 'D2', 'P3');
+INSERT INTO Books
+VALUES ('9781439193631', 'On Writing: A Memoir of the Craft', 'Memoir', 'Non-fiction', 'Au4', 'D1', 'P4');
+INSERT INTO Books
+VALUES ('9780679805274', 'Oh, the Places Youll Go!', 'Childrens Book', 'Childrens Book', 'Au5', 'D3', 'P1');
+INSERT INTO Books
+VALUES ('9780525457237', 'The Complete Tales of Winnie-The-Pooh', 'Childrens Book', 'Childrens Book', 'Au6', 'D3', 'P2');
+
+Publishers
+CREATE TABLE Publishers
+( PublisherID CHAR(5),
+  PublisherName CHAR(30),
+  Phone CHAR(13), 	
+  Email CHAR(25),
+  ZipCode CHAR(5),
+  PRIMARY KEY(PublisherID),
+  FOREIGN KEY (ZipCode) REFERENCES Zip(Zipcode)
+);
+ 
+INSERT INTO Publishers
+VALUES ('P1','Penguin Random House', '712-456-7894','Random@house.com','17013');
+INSERT INTO Publishers
+VALUES ('P2','Hachette Livre', '745-897-688' , 'hachette@livre.com','17057');
+INSERT INTO Publishers
+VALUES ('P3','Springer Nature', '610-235-6789', 'springer@nature.com','17601');
+INSERT INTO Publishers
+VALUES ('P4', 'Scholastic', '564-897-598', 'scholastic@house.com','17055');
+INSERT INTO Publishers
+VALUES ('P5','Bloomsbury','212-419-5300','askacadamics@bburrey.com','17078');
+INSERT INTO Publishers
+VALUES ('P6', 'Oxford Uni Press', '741-789-1230', 'oxford@press.com','17025');
+INSERT INTO Publishers
+VALUES ('P7', 'Simon and Schuster', '789-456-1230', 'simon@schuster.com','17022');
+INSERT INTO Publishers
+VALUES ('P8', 'Jones and Bartlett Learning', '5612347894', 'jones@bartlett.com','17033');
+INSERT INTO Publishers
+VALUES ('P9', 'McGraw-Hill Education', '456-789-4521', 'mcgrawhill@education.com','17032');
+INSERT INTO Publishers
+VALUES ('P10', 'Puffin Books', '457-785-8965', 'puffin@books.com','17036');
+
+
+Authors
+CREATE TABLE Authors 
+(
+AuthorID CHAR (5),
+PenName (32),
+FName (16),
+MName (16),
+LName (16),
+PRIMARY KEY (AuthorID)
+);
+
+INSERT INTO Authors
+VALUES ('Au1', 'George R. R. Martin', 'George', 'R. R.', 'Martin');
+INSERT INTO Authors
+VALUES ('Au2', 'William Golding', 'William', '', 'Golding');
+INSERT INTO Authors
+VALUES ('Au3', 'Seamus Heaney', 'Seamus', '', 'Heaney');
+INSERT INTO Authors
+VALUES ('Au4', 'Stephen King', 'Stephen', '', 'King');
+INSERT INTO Authors
+VALUES ('Au5', 'Dr. Seuss', 'Theodor', '', 'Seuss');
+INSERT INTO Authors
+VALUES ('Au6', 'A. A. Milne', 'Alan', 'Alexander', 'Milne');
+INSERT INTO Authors
+VALUES ('Au7', 'J. K. Rowling', 'Joanne', '', 'Rowling');
+INSERT INTO Authors
+VALUES ('Au8', 'Harper Lee', 'Nelle', 'Harper', 'Lee');
+INSERT INTO Authors
+VALUES ('Au9', 'Junot Diaz', 'Junot', '', 'Diaz');
+INSERT INTO Authors
+VALUES ('Au10', 'Charles Dickens', 'Charles', '', 'Dickens');
+
+
+Orders
+CREATE TABLE Orders
+( OrderID CHAR(5),
+  PaymentMethod CHAR(15),
+  SalesTax CHAR(15),
+  TotalAmt DECIMAL (7, 2),           	
+  PRIMARY KEY(OrderID)
+);
+ 
+INSERT INTO Orders VALUES ('O1','VISA','6%', 26.50);
+INSERT INTO Orders VALUES ('O2','Paypal','25%', 20.00);
+INSERT INTO Orders VALUES ('O3','Gift Card','6%', 15.90);
+INSERT INTO Orders VALUES ('O4','Gift Card','6%', 56.50);
+INSERT INTO Orders VALUES ('O5', 'AmEx', '6%', 46.99);
+INSERT INTO Orders VALUES ('O6','MC','6%', 19.99);
+INSERT INTO Orders VALUES ('O7','Gift Card','3%', 36.97);
+INSERT INTO Orders VALUES ('O8','DISC','6%', 42.67);
+INSERT INTO Orders VALUES ('O9','VISA','6%', 55.99);
+INSERT INTO Orders VALUES ('O10','AmEx','6%', 16.99);
+
+Order details
+CREATE TABLE OrderDetails
+( OrderID CHAR (5),
+  ISBN CHAR (17),
+  EmailAddress CHAR (32),
+  OrderDate DATE,
+  OrderTime CHAR(8),
+  Quantity INT,
+  DiscountApplied CHAR (20),
+  AddressID CHAR (5),
+  MemberID CHAR (5),
+  PRIMARY KEY (OrderID, ISBN),
+  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID),
+  FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+ );
+ 
+ 
+INSERT INTO OrderDetails
+VALUES ('O1', '9780553593716', 'email@address.com', '12-Mar-2016', '13:24:23', '1', 'None', 'A1', 'M1');
+INSERT INTO OrderDetails
+VALUES ('O1', '9780553579901', 'email@address.com', '12-Mar-2016', '13:24:23', '1', 'None', 'A1', 'M1');
+INSERT INTO OrderDetails
+VALUES ('O1', '9780553573428', 'email@address.com', '12-Mar-2016', '13:24:23', '1', 'None', 'A1', 'M1');
+INSERT INTO OrderDetails
+VALUES ('O1', '9780553582024', 'email@address.com', '12-Mar-2016', '13:24:23', '1', 'None', 'A1', 'M1');
+INSERT INTO OrderDetails
+VALUES ('O1', '9780553582017', 'email@address.com', '12-Mar-2016', '13:24:23', '1', 'None', 'A1', 'M1');
+ INSERT INTO OrderDetails
+VALUES ('O2', '978-0399501487', 'jdoe@gmail.com', '25-Mar-2019', '19:25:23', '1', 'Employee Discount', 'A0', 'EMPL');
+ INSERT INTO OrderDetails
+VALUES ('O2', '978-0393320978', 'jdoe@gmail.com', '25-Mar-2019', '19:25:23', '1', 'Employee Discount', 'A0', 'EMPL');
+ INSERT INTO OrderDetails
+VALUES ('O3', '978-1439193631', 'myemail@address.net', '22-Oct-2019', '08:45:53', '1', 'None', 'A3', 'NULL');
+INSERT INTO OrderDetails
+VALUES ('O4', '978-0679805274', 'myemail@address.org', '12-Feb-2019', '18:45:27', '1', 'None', 'A4', 'NULL');
+INSERT INTO OrderDetails
+VALUES ('O4', '978-0525457237', 'myemail@address.org', '12-Feb-2019', '18:45:27', '1', 'None', 'A4', 'NULL');
+
+
+
+
+Addresses
+CREATE TABLE Addresses
+( AddressID CHAR(5),
+  StAddress CHAR(50),
+  ZIPCode CHAR(5),
+PRIMARY KEY (AddressID),
+FOREIGN KEY (ZipCode) REFERENCES Zip(Zipcode)
+);
+
+INSERT INTO Addresses
+VALUES ('A0', 'Branch Address', '17013');    	
+INSERT INTO Addresses
+VALUES ('A1', '1236 Harrisburg Pike', '17013');    	
+INSERT INTO Addresses
+VALUES ('A2', '57 Taxas St.', '17057');                  	
+INSERT INTO Addresses
+VALUES ('A3', '1 White Oak Dr.', '17601');            	
+INSERT INTO Addresses
+VALUES ('A4', '1001 Jonas St.', '17601');              	
+INSERT INTO Addresses
+VALUES ('A5', '400 E 2nd St.', '17013');                	
+INSERT INTO Addresses
+VALUES ('A6', '755 Wagon Ave..', '17078');          	 
+INSERT INTO Addresses
+VALUES ('A7', '70 Lancaster Dr.', '17055');           	
+INSERT INTO Addresses
+VALUES ('A8', '32 Miles Lane', '17055');                	
+INSERT INTO Addresses
+VALUES ('A9', '278 Lake Dr.', '17078');     	        	
+INSERT INTO Addresses
+VALUES ('A10', '8845 Queen Ave.', '17025');        
+
+
+
+ZIP
+CREATE TABLE ZIP
+( ZIPCode CHAR(5),
+  City CHAR(15),
+  State CHAR(20),   	
+  Primary Key (ZIPCode)
+);
+ 
+INSERT INTO ZIP
+VALUES ('17013', 'Carlisle', 'PA');
+INSERT INTO ZIP
+VALUES ('17022', 'Elizabethtown', 'PA');
+INSERT INTO ZIP
+VALUES ('17025', 'Enola', 'PA');
+INSERT INTO ZIP
+VALUES ('17032', 'Halifax', 'PA');
+INSERT INTO ZIP
+VALUES ('17033', 'Hershey', 'PA');
+INSERT INTO ZIP
+VALUES ('17036', 'Hummelstown', 'PA');
+INSERT INTO ZIP
+VALUES ('17055', 'Mechanicsburg', 'PA');
+INSERT INTO ZIP
+VALUES ('17057', 'Middletown', 'PA');
+INSERT INTO ZIP
+VALUES ('17078', 'Palmyra', 'PA');
+INSERT INTO ZIP
+VALUES ('17601', 'Lancaster', 'PA');
+
+
+
+
+
+
+Shipping Details
+CREATE TABLE ShippingDetails
+( OrderId CHAR(5),
+  AddressID CHAR(5),
+  ShipMethod CHAR(20),   
+  ShipDate DATE,
+  DeliveryDate DATE,
+  ShipCost DECIMAL(4,2), 	
+ FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID),
+ Primary Key (OrderID, AddressID, ZIPCode)
+);
+ 
+INSERT INTO ShippingDetails
+VALUES ('O1', 'A1','Express', '8-Jun-2012', '6-Jun-2012', 68.99);
+INSERT INTO ShippingDetails
+VALUES ('O2', 'A2','Priority', '25-Dec-2007', '4-May-2007', 54.99);
+INSERT INTO ShippingDetails
+VALUES ('O3', 'A3', 'Express', '5-Oct-2005', '6-Jun-2012', 44.00);
+INSERT INTO ShippingDetails
+VALUES ('O4','A4', 'First-Class', '6-Mar-2001', '4-Oct-2006', 5.50);
+INSERT INTO ShippingDetails
+VALUES('O5','A5', 'Retail Ground','24-May-2015','27-Oct-2016', 20.45);
+INSERT INTO ShippingDetails
+VALUES('O6','A6', 'Express','30-Dec-2013','1-Jan-2014', 55.99);
+INSERT INTO ShippingDetails
+VALUES('O7','A7', 'Priority','17-May-2004','30-May-2004', 70.70);
+INSERT INTO ShippingDetails
+VALUES('O8','A8', 'Retail Ground','2-Jun-2016','3-Jun-2016', 55.00);
+INSERT INTO ShippingDetails
+VALUES('O9','A9', 'Express','14-Feb-2014','28-Feb-2014', 10.53);
+INSERT INTO ShippingDetails
+VALUES('O10','A10', 'First-Class','7-Sep-2008','5-Oct-2008', 30.90);
+
+
+Departments
+CREATE TABLE Departments
+( DepartmentID CHAR(5),
+  DeptName CHAR(20),
+  Description CHAR(50),
+  DeptSize INTEGER,
+  PRIMARY KEY(DepartmentID)
+);                                                                             	        	
+ 
+INSERT INTO Departments VALUES ('D1','NonFiction','Biographies, Memoirs', 10);
+INSERT INTO Departments VALUES ('D2','Fiction','Mystery, Poetry, ETC', 12);
+INSERT INTO Departments VALUES ('D3','Childrens','Childrens Books and Toys', 15);
+INSERT INTO Departments VALUES ('D4','Merchandise','Games, Figurines, Toys', 11);
+INSERT INTO  Departments VALUES ('D5', 'Comics', 'Comics books', 6);
+INSERT INTO Departments VALUES ('D6','Music','CDs, Cassettes, Vinyls',12);
+INSERT INTO Departments VALUES ('D7','Videos','DVDs, TV show sets',7);
+INSERT INTO Departments VALUES ('D8','Magazines','All Magazines',5);
+INSERT INTO Departments VALUES ('D9','Stationary','Office supplies, desk toppers',11);
+INSERT INTO Departments VALUES ('D10','Cafe','Featured Starbucks Drinks',15);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Employees
+CREATE TABLE Employees
+( EmployeeID CHAR(5),
+  FName CHAR(15),
+  LName CHAR(15),
+  DOB DATE,
+  Phone CHAR(13),
+  Email CHAR(25),
+  DepartmentID CHAR(5),
+  AddressID CHAR(5),
+  PRIMARY KEY(EmployeeID),
+  FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID),
+  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+);
+ 
+INSERT INTO Employees
+VALUES ('E1', 'Jane', 'Doe', '10-Jun-1989', '484-123-1245', 'jdoe@gmail.com','D3', 'A1');
+INSERT INTO Employees
+VALUES ('E2','John','Smith','06-Sep-1980','484-111-1122','jsmith@gmail.com','D2' ,'A2');
+INSERT INTO Employees
+VALUES ('E3','Jan','Lee','27-Nov-1992','484-104-1021','jlee@gmail.com','D1' ,'A3');
+INSERT INTO Employees
+VALUES ('E4','Jo','Miller','22-Feb-1974','484-124-1247','JoMiller@gmail.com','D4', 'A4');
+INSERT INTO Employees
+VALUES ('E5','Jake','Fox','4-Mar-1964','484-787-1289','JFox@gmail.com','D6','A5');
+INSERT INTO Employees
+VALUES ('E6','Stan','Lee','28-Dec-1922','484-649-5689','slee@gmail.com','D5', 'A6');
+INSERT INTO Employees
+VALUES ('E7','Karen', 'Green', '17-Nov-1982', '484-123 7410', 'kgreen@gmail.com', 'D7', 'A7');
+INSERT INTO Employees
+VALUES ('E8','Nao','Zhao','01-Apr-1997','484-741-8520','nzhao@gmail.com','D8', 'A8');
+INSERT INTO Employees
+VALUES ('E9','Mary','Jane','19-May-1990','484-963-8547','mjane@gmail.com','D9' ,'A9');
+INSERT INTO Employees
+VALUES ('E10','Steve','Johns','7-Jun-1972','484-753-9512', 'sjohns@gmail.com', 'D10', 'A10');
+
+
+Members
+CREATE TABLE Members
+( MemberID CHAR (5),
+  FName CHAR (20),
+  LName CHAR (20),
+  Phone CHAR (15),
+  EmailAddress CHAR (32),
+  AddressID CHAR (5),
+  PRIMARY KEY (MemberID),
+  FOREIGN KEY (AddressID) REFERENCES Addresses(AddressID)
+);
+ 
+INSERT INTO Members
+VALUES ('M1', 'Jane', 'Doe', '717-234-5678', 'email@address.com', 'A1');
+INSERT INTO Members
+VALUES ('M2', 'Jonathan', 'Doe', '717-134-5678', 'email@address.org', 'A1');
+INSERT INTO Members
+VALUES ('M3', 'Janet', 'Smith', '717-334-5678', 'email@address.net', 'A2');
+INSERT INTO Members
+VALUES ('M4', 'Johnny', 'Smith', '717-434-5678', 'email@address.edu', 'A2');
+INSERT INTO Members
+VALUES ('M5', 'Jenny', 'Smith', '717-534-5678', 'myemail@address.edu', 'A2');
+INSERT INTO Members
+VALUES ('M6', 'Mark', 'Johnson', '717-534-5679', 'myemail@address.com', 'A3');
+INSERT INTO Members
+VALUES ('M7', 'Patrick', 'Johnson', '717-534-5681', 'myemail@address.net', 'A3');
+INSERT INTO Members
+VALUES ('M8', 'Chris', 'Jones', '717-534-5634', 'myemail@address.blog', 'A4');
+INSERT INTO Members
+VALUES ('M9', 'Carl', 'Williams', '717-534-3678', 'myemail@address.org', 'A5');
+INSERT INTO Members
+VALUES ('M10', 'Jan', 'Williams', '717-634-5678', 'myemail@address.edu', 'A5');
+INSERT INTO Members
+VALUES ('EMPL', 'Employee', 'Account', '1234567899', 'employee@bnc.com', 'A5');
+INSERT INTO Members
+VALUES ('NULL', 'Null', 'Account', '0000000000', 'Null', 'A5');
